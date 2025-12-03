@@ -44,8 +44,8 @@ const partOne = Effect.fn("partOne")(function*({
 }) {
   const dial = yield* Dial.make(startingRotation);
   const allTurns = yield* calculateAllTurns(dial, instructions);
-  const targetOccurences = findOccurencesOf([0], allTurns);
-  yield* Effect.log(`Password: ${targetOccurences.length}`);
+  const password = findOccurencesOf([0], allTurns).length;
+  yield* Effect.log(`Password: ${password}`);
 }, Effect.withLogSpan("[Part One]"));
 
 const partTwo = Effect.fn("partTwo")(function*({
