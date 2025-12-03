@@ -1,5 +1,4 @@
 import { Schema } from "effect";
-import { ArrayFromFallible } from "../lib";
 
 export type Instruction = typeof Instruction.Type;
 export const Instruction = Schema.Union(
