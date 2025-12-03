@@ -61,7 +61,7 @@ const partTwo = Effect.fn("partTwo")(function*({
   yield* Effect.log(`Password: ${password}`);
 }, Effect.withLogSpan("[Part Two]"));
 
-const program = Effect.gen(function*() {
+const main = Effect.gen(function*() {
   const STARTING_ROTATION = 50;
   const instructions = yield* getInstructions("./src/problem_01/input.txt");
   yield* Effect.fork(
@@ -80,4 +80,4 @@ const program = Effect.gen(function*() {
 
 BunRuntime.runMain({
   teardown: defaultTeardown,
-})(program);
+})(main);
