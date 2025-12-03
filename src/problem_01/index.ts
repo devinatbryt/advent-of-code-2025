@@ -27,6 +27,11 @@ const calculateAllTurns = Effect.fn("followInstructions")(function*(
   );
 });
 
+const getInstructions = Effect.fn("getInstructions")(function*(path: string) {
+  const content = yield* getFileString(path);
+  return yield* Schema.decode(Instructions)(content);
+});
+
 const findOccurencesOf = (targets: number[], turns: number[]) =>
   turns.filter((turn) => targets.includes(turn));
 
@@ -58,8 +63,7 @@ const partTwo = Effect.fn("partTwo")(function*({
 
 const program = Effect.gen(function*() {
   const STARTING_ROTATION = 50;
-  const content = yield* getFileString("./src/problem_01/input.txt");
-  const instructions = yield* Schema.decode(Instructions)(content);
+  const instructions = yield* getInstructions("./src/problem_01/input.txt");
   yield* Effect.fork(
     partOne({
       startingRotation: STARTING_ROTATION,
