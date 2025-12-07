@@ -22,3 +22,15 @@ export const ArrayFromFallible = <A, I, R>(self: Schema.Schema<A, I, R>) =>
       strict: true,
     }),
   );
+
+export const NewLineToArrayFromFallible = <A, I, R>(
+  self: Schema.Schema<A, I, R>,
+) =>
+  Schema.split("\n").pipe(
+    Schema.transform(ArrayFromFallible(self), {
+      strict: false,
+      encode: (a) => a,
+      decode: (i) => i,
+    }),
+    Schema.asSchema,
+  );
