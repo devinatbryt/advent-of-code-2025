@@ -1,22 +1,16 @@
 import { defaultTeardown } from "@effect/platform/Runtime";
 import { BunRuntime } from "@effect/platform-bun";
 import { Effect, Schema } from "effect";
-import { mainLayer } from "./mainLayer";
+import { globalLayer } from "../globalLayer";
 
 import * as Dial from "./Dial";
 import * as DialWithFullRotationCounter from "./DialWithFullRotationCounter";
 
-import { ArrayFromFallible, getFileString } from "../lib";
+import { getFileString, NewLineToArrayFromFallible } from "../lib";
 import { Instruction } from "./schema";
 
 type Instructions = typeof Instructions.Type;
-const Instructions = Schema.split("\n").pipe(
-  Schema.transform(ArrayFromFallible(Instruction), {
-    strict: false,
-    encode: (a) => a,
-    decode: (i) => i,
-  }),
-);
+const Instructions = NewLineToArrayFromFallible(Instruction);
 
 const calculateAllTurns = Effect.fn("followInstructions")(function*(
   dial: Dial.Dial,
@@ -76,7 +70,7 @@ const main = Effect.gen(function*() {
       instructions,
     }),
   );
-}).pipe(Effect.provide(mainLayer));
+}).pipe(Effect.provide(globalLayer));
 
 BunRuntime.runMain({
   teardown: defaultTeardown,
