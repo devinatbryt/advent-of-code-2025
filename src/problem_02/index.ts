@@ -168,5 +168,5 @@ const main = ({ fileName }: Options) =>
   }).pipe(Effect.provide(globalLayer));
 
 main({
-  fileName: "input_test.txt",
+  fileName: "input.txt",
 }).pipe(BunRuntime.runMain());
